@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2,
+    "name": "Zydo",
+    "version": "0.1",
+
+    "description": "Solve a Zybook section by clicking the participation buttons automatically. Challenge questions are not supported.",
+
+    "content_scripts":{
+        "matches": ["*//learn.zybooks.com/zybook/*"],
+        "js":["searchAndDestroy.js"]
+    }
+
+}
