@@ -5,9 +5,13 @@
 
     "description": "Solve a Zybook section by clicking the participation buttons automatically. Challenge questions are not supported.",
 
+    "icons":{
+        "75":"icon/icon.png"
+    },
+    
     "content_scripts":[
             {
-            "matches": ["*//learn.zybooks.com/zybook/*"],
+            "matches": ["*://*.zybooks.com/*"],
             "js":["searchAndDestroy.js"]
         }
     ]
