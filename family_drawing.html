@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Family - By Little Artist</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Comic Sans MS', cursive;
+        }
+        canvas {
+            border: 5px solid #8B4513;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #FF6B6B;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">My Family ❤️</div>
+    <canvas id="familyCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('familyCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Helper function to add slight randomness for hand-drawn effect
+        function wiggle(value, amount = 2) {
+            return value + (Math.random() - 0.5) * amount;
+        }
+
+        // Draw sky
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(0, 0, 800, 400);
+
+        // Draw grass
+        ctx.fillStyle = '#90EE90';
+        ctx.fillRect(0, 400, 800, 200);
+
+        // Draw sun
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(700, 80, 40, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Sun rays
+        ctx.strokeStyle = '#FFD700';
+        ctx.lineWidth = 3;
+        for (let i = 0; i < 8; i++) {
+            const angle = (Math.PI * 2 * i) / 8;
+            ctx.beginPath();
+            ctx.moveTo(700 + Math.cos(angle) * 45, 80 + Math.sin(angle) * 45);
+            ctx.lineTo(700 + Math.cos(angle) * 65, 80 + Math.sin(angle) * 65);
+            ctx.stroke();
+        }
+
+        // Draw house
+        ctx.fillStyle = '#FF6B6B';
+        ctx.fillRect(50, 250, 200, 150);
+
+        // Roof
+        ctx.fillStyle = '#8B4513';
+        ctx.beginPath();
+        ctx.moveTo(40, 250);
+        ctx.lineTo(150, 180);
+        ctx.lineTo(260, 250);
+        ctx.closePath();
+        ctx.fill();
+
+        // Door
+        ctx.fillStyle = '#654321';
+        ctx.fillRect(125, 320, 50, 80);
+
+        // Windows
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(70, 280, 40, 40);
+        ctx.fillRect(190, 280, 40, 40);
+
+        // Window panes
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(90, 280);
+        ctx.lineTo(90, 320);
+        ctx.moveTo(70, 300);
+        ctx.lineTo(110, 300);
+        ctx.moveTo(210, 280);
+        ctx.lineTo(210, 320);
+        ctx.moveTo(190, 300);
+        ctx.lineTo(230, 300);
+        ctx.stroke();
+
+        // Function to draw a stick figure person
+        function drawPerson(x, y, headColor, shirtColor, name, height = 100) {
+            // Head
+            ctx.fillStyle = headColor;
+            ctx.beginPath();
+            ctx.arc(wiggle(x), wiggle(y), 25, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Smiley face
+            ctx.beginPath();
+            ctx.arc(wiggle(x - 8), wiggle(y - 5), 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.arc(wiggle(x + 8), wiggle(y - 5), 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(x, y + 5, 10, 0, Math.PI);
+            ctx.stroke();
+
+            // Body (shirt)
+            ctx.fillStyle = shirtColor;
+            ctx.fillRect(wiggle(x - 20), y + 25, 40, height * 0.5);
+            ctx.strokeRect(wiggle(x - 20), y + 25, 40, height * 0.5);
+
+            // Arms
+            ctx.strokeStyle = shirtColor;
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(wiggle(x - 20), wiggle(y + 35));
+            ctx.lineTo(wiggle(x - 40), wiggle(y + 60));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(wiggle(x + 20), wiggle(y + 35));
+            ctx.lineTo(wiggle(x + 40), wiggle(y + 60));
+            ctx.stroke();
+
+            // Hands
+            ctx.fillStyle = headColor;
+            ctx.beginPath();
+            ctx.arc(wiggle(x - 40), wiggle(y + 60), 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(wiggle(x + 40), wiggle(y + 60), 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Legs
+            ctx.strokeStyle = '#4169E1';
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(wiggle(x - 10), y + 25 + height * 0.5);
+            ctx.lineTo(wiggle(x - 15), y + 25 + height);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(wiggle(x + 10), y + 25 + height * 0.5);
+            ctx.lineTo(wiggle(x + 15), y + 25 + height);
+            ctx.stroke();
+
+            // Shoes
+            ctx.fillStyle = '#000';
+            ctx.fillRect(wiggle(x - 20), y + 25 + height, 12, 6);
+            ctx.fillRect(wiggle(x + 8), y + 25 + height, 12, 6);
+
+            // Name label
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 16px Comic Sans MS';
+            ctx.textAlign = 'center';
+            ctx.fillText(name, x, y + 25 + height + 25);
+        }
+
+        // Draw family members
+        // Dad (tall, blue shirt)
+        drawPerson(350, 280, '#FDB99B', '#4169E1', 'Dad', 120);
+
+        // Mom (medium height, pink shirt)
+        drawPerson(480, 290, '#FDB99B', '#FF69B4', 'Mom', 110);
+
+        // Big sister (purple shirt)
+        drawPerson(580, 310, '#FDB99B', '#9370DB', 'Sister', 90);
+
+        // Little brother (green shirt, shorter)
+        drawPerson(420, 330, '#FDB99B', '#32CD32', 'Me!', 70);
+
+        // Draw some flowers
+        function drawFlower(x, y, petalColor) {
+            // Stem
+            ctx.strokeStyle = '#228B22';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y + 30);
+            ctx.stroke();
+
+            // Petals
+            ctx.fillStyle = petalColor;
+            for (let i = 0; i < 5; i++) {
+                const angle = (Math.PI * 2 * i) / 5;
+                ctx.beginPath();
+                ctx.arc(
+                    x + Math.cos(angle) * 8,
+                    y + Math.sin(angle) * 8,
+                    6,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+
+            // Center
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Add some flowers
+        drawFlower(100, 470, '#FF1493');
+        drawFlower(150, 485, '#FF69B4');
+        drawFlower(680, 475, '#9370DB');
+        drawFlower(730, 490, '#FF6347');
+        drawFlower(50, 490, '#FFD700');
+
+        // Draw clouds
+        function drawCloud(x, y) {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.arc(x + 20, y - 5, 25, 0, Math.PI * 2);
+            ctx.arc(x + 40, y, 20, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        drawCloud(100, 80);
+        drawCloud(450, 60);
+
+        // Add a bird
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(300, 120);
+        ctx.quadraticCurveTo(310, 115, 320, 120);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(320, 120);
+        ctx.quadraticCurveTo(330, 115, 340, 120);
+        ctx.stroke();
+
+        // Add hearts floating around
+        function drawHeart(x, y, size) {
+            ctx.fillStyle = '#FF69B4';
+            ctx.beginPath();
+            ctx.moveTo(x, y + size / 4);
+            ctx.quadraticCurveTo(x, y, x + size / 2, y);
+            ctx.quadraticCurveTo(x + size, y, x + size, y + size / 4);
+            ctx.quadraticCurveTo(x + size, y + size / 2, x + size / 2, y + size);
+            ctx.quadraticCurveTo(x, y + size / 2, x, y + size / 4);
+            ctx.fill();
+        }
+
+        drawHeart(280, 220, 20);
+        drawHeart(650, 250, 15);
+        drawHeart(520, 200, 18);
+    </script>
+</body>
+</html>
